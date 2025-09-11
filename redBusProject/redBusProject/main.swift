@@ -1,6 +1,7 @@
 import Foundation
 
-//readLine()은 옵셔널 문자열 타입이라 guard구문을 이용하여 Int형변환 안될시 숫자 입력해주세요? 출력 및 프로그램 종료
+//readLine()은 옵셔널 문자열 타입이라 guard구문을 이용하여 Int형변환 안될시 숫자 입력해주세요! 출력 및 프로그램 종료
+//swift 입력은 c와 달리 구현이 어려워 https://josee2.tistory.com/32 참조
 print("몇시인가요? : ", terminator: "")
 guard let hour = readLine(), let userHour = Int(hour) else {
     print("숫자를 입력해주세요!")
