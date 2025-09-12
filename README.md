@@ -54,6 +54,7 @@ let userTime = userHour * 60 + userMinute
 또한 이미 Int형인 userTime 상수는 minuteCange값과의 차를 위해 분으로 변경하였다
 
 var subUserTime = [Int]()
+
 for i in 0...43 {
     subUserTime.append(minuteChange[i] - userTime)
 }
