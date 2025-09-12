@@ -53,7 +53,7 @@ prefix와 suffix 메서드 타입은 Substring이라 바로 Int형 변환을 못
 let userTime = userHour * 60 + userMinute
 또한 이미 Int형인 userTime 상수는 minuteCange값과의 차를 위해 분으로 변경하였다
 
-var subUserTime = [Int]()
+var subUserTime = [Int]() (배열 선언되있지만 깃허브에 글을 쓸때 그냥 Int형으로 보인다)
 
 for i in 0...43 {
     subUserTime.append(minuteChange[i] - userTime)
