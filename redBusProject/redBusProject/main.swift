@@ -32,15 +32,25 @@ if userHour == 23 && userMinute > 42 {
     print("막차가 지나갔습니다! 첫차를 기다려주세요!")
     exit(0)
 }
-
-
 print("현재시각: \(userHour)시 \(userMinute)분")
 
 // 대림동산 정거장 4401 버스 도착시간
-let busArrivalTime: [String] = ["0511","0539","0600","0621","0636","0651","0709","0730","0751","0812","0842","0912","0939","1009","1031","1049","1110","1139","1212","1239","1309","1339","1410","1431","1449","1510","1531","1551","1609","1631","1650","1712","1745","1813","1841","1911","1931","1951","2009","2041","2109","2142","2209","2241"]
+let busArrivalTimeDaerim: [String] = ["0511","0539","0600","0621","0636","0651", "0701","0709","0730","0751","0812","0842","0912","0939","1009","1031","1049","1110","1139","1212","1239","1309","1339","1410","1431","1449","1510","1531","1551","1609","1631","1650","1712","1745","1813","1841","1911","1931","1951","2009","2041","2109","2142","2209","2241"]
+// 공도 정거장 4401 버스 도착시간
+let busArrivalTimeGongdo: [String] = ["0519", "0546", "0610", "0628", "0647", "0659", "0719", "0740", "0802", "0822", "0855", "0922", "0949", "1019", "1040", "1101", "1119", "1149", "1222", "1246", "1320", "1349", "1421", "1440", "1455", "1503", "1522", "1540", "1601", "1619", "1640", "1701", "1720", "1755", "1822", "1855", "1922", "1940", "2001", "2019", "2049", "2116", "2149", "2216", "2252"]
+
+print(busArrivalTimeDaerim.count)
+print(busArrivalTimeGongdo.count)
+
 
 // 값비교를 위한 분으로 바꿈
-let minuteChange = busArrivalTime.map {busTime -> Int in
+let minuteChange = busArrivalTimeDaerim.map {busTime -> Int in
+    let busHour = Int(String(busTime.prefix(2))) ?? 0
+    let busMinute = Int(String(busTime.suffix(2))) ?? 0
+    return busHour * 60 + busMinute
+}
+
+let minuteChangeTwo = busArrivalTimeGongdo.map {busTime -> Int in
     let busHour = Int(String(busTime.prefix(2))) ?? 0
     let busMinute = Int(String(busTime.suffix(2))) ?? 0
     return busHour * 60 + busMinute
@@ -48,20 +58,34 @@ let minuteChange = busArrivalTime.map {busTime -> Int in
 
 let userTime = userHour * 60 + userMinute
 // minuteChange[]와 userTime의 차를 저장할 subUserTime이라는 배열 변수 추가
-var subUserTime = [Int]()
-for i in 0...43 {
-    subUserTime.append(minuteChange[i] - userTime)
+var subUserTimeDaerim = [Int]()
+var subUserTimeGongdo = [Int]()
+
+for i in 0...44 {
+    subUserTimeDaerim.append(minuteChange[i] - userTime)
 }
 // subUserTime에서 0보다 크면서 최솟값을 lowButUpZero라는 변수에 저장하여
 // 같은 index에 해당하는 busArrivalTime의 배열을 이용해 도착예정시간 출력
-if let lowButUpZero = subUserTime.filter({ $0 > 0 }).min() {
-    if let index = subUserTime.firstIndex(of: lowButUpZero){
-        let printBusTime = busArrivalTime[index]
-        print("도착예정시간: \(printBusTime.prefix(2)):\(printBusTime.suffix(2))")
+if let lowButUpZero = subUserTimeDaerim.filter({ $0 > 0 }).min() {
+    if let index = subUserTimeDaerim.firstIndex(of: lowButUpZero){
+        let printBusTime = busArrivalTimeDaerim[index]
+        print("대림동산 도착예정시간: \(printBusTime.prefix(2)):\(printBusTime.suffix(2))")
         print("\(lowButUpZero)분 후 도착합니다.")
     }
 }
 
+for i in 0...44 {
+    subUserTimeGongdo.append(minuteChangeTwo[i] - userTime)
+}
+// subUserTime에서 0보다 크면서 최솟값을 lowButUpZero라는 변수에 저장하여
+// 같은 index에 해당하는 busArrivalTime의 배열을 이용해 도착예정시간 출력
+if let lowButUpZero = subUserTimeGongdo.filter({ $0 > 0 }).min() {
+    if let index = subUserTimeGongdo.firstIndex(of: lowButUpZero){
+        let printBusTime = busArrivalTimeGongdo[index]
+        print("공도버스정류장 도착예정시간: \(printBusTime.prefix(2)):\(printBusTime.suffix(2))")
+        print("\(lowButUpZero)분 후 도착합니다.")
+    }
+}
 
 
 
