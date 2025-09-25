@@ -28,7 +28,7 @@ if userMinute > 59 || userMinute < 00 {
     exit(0)
 }
 // 막차시간 이후 입력시 제한
-if userHour == 23 && userMinute > 42 {
+if userHour == 22 && userMinute > 41 {
     print("막차가 지나갔습니다! 첫차를 기다려주세요!")
     exit(0)
 }
@@ -61,29 +61,39 @@ let userTime = userHour * 60 + userMinute
 var subUserTimeDaerim = [Int]()
 var subUserTimeGongdo = [Int]()
 
-for i in 0...44 {
+for i in busArrivalTimeDaerim.indices {
     subUserTimeDaerim.append(minuteChange[i] - userTime)
 }
-// subUserTime에서 0보다 크면서 최솟값을 lowButUpZero라는 변수에 저장하여
+
+
+// subUserTimeDaerim에서 0보다 크면서 최솟값을 lowButUpZero라는 변수에 저장하여
 // 같은 index에 해당하는 busArrivalTime의 배열을 이용해 도착예정시간 출력
 if let lowButUpZero = subUserTimeDaerim.filter({ $0 > 0 }).min() {
     if let index = subUserTimeDaerim.firstIndex(of: lowButUpZero){
         let printBusTime = busArrivalTimeDaerim[index]
-        print("대림동산 도착예정시간: \(printBusTime.prefix(2)):\(printBusTime.suffix(2))")
-        print("\(lowButUpZero)분 후 도착합니다.")
+        if lowButUpZero == 1 {
+            print("대림동산 도착예정시간: 곧 도착")
+        } else {
+            print("대림동산 도착예정시간: \(printBusTime.prefix(2)):\(printBusTime.suffix(2))\n\(lowButUpZero)분 후 도착합니다. ")
+        }
     }
 }
 
-for i in 0...44 {
+
+
+for i in busArrivalTimeGongdo.indices {
     subUserTimeGongdo.append(minuteChangeTwo[i] - userTime)
 }
-// subUserTime에서 0보다 크면서 최솟값을 lowButUpZero라는 변수에 저장하여
+// subUserTimeGongdo에서 0보다 크면서 최솟값을 lowButUpZero라는 변수에 저장하여
 // 같은 index에 해당하는 busArrivalTime의 배열을 이용해 도착예정시간 출력
 if let lowButUpZero = subUserTimeGongdo.filter({ $0 > 0 }).min() {
     if let index = subUserTimeGongdo.firstIndex(of: lowButUpZero){
         let printBusTime = busArrivalTimeGongdo[index]
-        print("공도버스정류장 도착예정시간: \(printBusTime.prefix(2)):\(printBusTime.suffix(2))")
-        print("\(lowButUpZero)분 후 도착합니다.")
+        if lowButUpZero == 1 {
+            print("공도정류장 도착예정시간: 곧 도착")
+        } else {
+            print("공도정류장 도착예정시간: \(printBusTime.prefix(2)):\(printBusTime.suffix(2))\n\(lowButUpZero)분 후 도착합니다. ")
+        }
     }
 }
 
