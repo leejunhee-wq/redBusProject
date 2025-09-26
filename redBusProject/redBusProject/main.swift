@@ -94,7 +94,7 @@ func printBusTime(userTime: Int, busTime: [String], place: String ) {
             if lowBusUpZero == 1 {
                 print("\(place) 도착예정시간: 곧 도착")
             } else {
-                print("\(place): \(printBusTime.prefix(2)):\(printBusTime.suffix(2))\n\(lowBusUpZero)분 후 도착합니다.)")
+                print("\(place): \(printBusTime.prefix(2)):\(printBusTime.suffix(2))\n\(lowBusUpZero)분 후 도착합니다.")
             }
         }
     }
