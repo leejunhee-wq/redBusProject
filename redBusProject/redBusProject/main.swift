@@ -77,63 +77,31 @@ let busArrivalTimeDaerim: [String] = ["0511","0539","0600","0621","0636","0651",
 // 공도 정거장 4401 버스 도착시간
 let busArrivalTimeGongdo: [String] = ["0519", "0546", "0610", "0628", "0647", "0659", "0719", "0740", "0802", "0822", "0855", "0922", "0949", "1019", "1040", "1101", "1119", "1149", "1222", "1246", "1320", "1349", "1421", "1440", "1455", "1503", "1522", "1540", "1601", "1619", "1640", "1701", "1720", "1755", "1822", "1855", "1922", "1940", "2001", "2019", "2049", "2116", "2149", "2216", "2252"]
 
-
-// 값비교를 위한 분으로 바꿈
-let minuteChange = busArrivalTimeDaerim.map {busTime -> Int in
-    let busHour = Int(String(busTime.prefix(2))) ?? 0
-    let busMinute = Int(String(busTime.suffix(2))) ?? 0
-    return busHour * 60 + busMinute
-}
-
-let minuteChangeTwo = busArrivalTimeGongdo.map {busTime -> Int in
-    let busHour = Int(String(busTime.prefix(2))) ?? 0
-    let busMinute = Int(String(busTime.suffix(2))) ?? 0
-    return busHour * 60 + busMinute
-}
-
-// minuteChange[]와 userTime의 차를 저장할 subUserTime이라는 배열 변수 추가
-var subUserTimeDaerim = [Int]()
-var subUserTimeGongdo = [Int]()
-
-for i in busArrivalTimeDaerim.indices {
-    subUserTimeDaerim.append(minuteChange[i] - userTime)
-}
-
-
-// subUserTimeDaerim에서 0보다 크면서 최솟값을 lowButUpZero라는 변수에 저장하여
-// 같은 index에 해당하는 busArrivalTime의 배열을 이용해 도착예정시간 출력
-if let lowButUpZero = subUserTimeDaerim.filter({ $0 > 0 }).min() {
-    if let index = subUserTimeDaerim.firstIndex(of: lowButUpZero){
-        let printBusTime = busArrivalTimeDaerim[index]
-        if lowButUpZero == 1 {
-            print("대림동산 도착예정시간: 곧 도착")
-        } else {
-            print("대림동산 도착예정시간: \(printBusTime.prefix(2)):\(printBusTime.suffix(2))\n\(lowButUpZero)분 후 도착합니다. ")
+func printBusTime(userTime: Int, busTime: [String], place: String ) {
+    let ChangMinute = busTime.map {busTime -> Int in
+        let busHour = Int(String(busTime.prefix(2))) ?? 0
+        let busMinute = Int(String(busTime.suffix(2))) ?? 0
+        return busHour * 60 + busMinute
+    }
+    
+    let subUserTime = ChangMinute.map { busTime in
+        return busTime - userTime
+    }
+    
+    if let lowBusUpZero = subUserTime.filter({ $0 > 0 }).min() {
+        if let index = subUserTime.firstIndex(of: lowBusUpZero){
+            let printBusTime = busTime[index]
+            if lowBusUpZero == 1 {
+                print("\(place) 도착예정시간: 곧 도착")
+            } else {
+                print("\(place): \(printBusTime.prefix(2)):\(printBusTime.suffix(2))\n\(lowBusUpZero)분 후 도착합니다.)")
+            }
         }
     }
 }
 
-
-
-for i in busArrivalTimeGongdo.indices {
-    subUserTimeGongdo.append(minuteChangeTwo[i] - userTime)
-}
-// subUserTimeGongdo에서 0보다 크면서 최솟값을 lowButUpZero라는 변수에 저장하여
-// 같은 index에 해당하는 busArrivalTime의 배열을 이용해 도착예정시간 출력
-if let lowButUpZero = subUserTimeGongdo.filter({ $0 > 0 }).min() {
-    if let index = subUserTimeGongdo.firstIndex(of: lowButUpZero){
-        let printBusTime = busArrivalTimeGongdo[index]
-        if lowButUpZero == 1 {
-            print("공도정류장 도착예정시간: 곧 도착")
-        } else {
-            print("공도정류장 도착예정시간: \(printBusTime.prefix(2)):\(printBusTime.suffix(2))\n\(lowButUpZero)분 후 도착합니다. ")
-        }
-    }
-}
-
-
-
-
+printBusTime(userTime: userTime, busTime: busArrivalTimeDaerim, place: "대림동산 정류장")
+printBusTime(userTime: userTime, busTime: busArrivalTimeGongdo, place: "공도 정류장")
 
 
 
